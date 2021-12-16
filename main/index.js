@@ -2,6 +2,7 @@ const d = document;
 //Estado
 let state = {
     todoList: [],
+    nombre: ""
 };
 //Template
 const template = () => {
@@ -15,6 +16,21 @@ const render = () => {
     if (!$list) return;
     $list.innerHTML = template();
 };
+
+//SetState
+const setState = (obj) => {
+    for(let key in obj){
+        if(state.hasOwnProperty(key)){
+            state[key] = obj[key]
+        }
+    }
+    render();
+}
+
+setState({
+    todoList: ["item1","item2","item3"],
+    nombre: "odon"
+})
 
 function addToDo(e) {
     e.preventDefault();

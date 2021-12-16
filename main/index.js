@@ -1,16 +1,32 @@
 const d = document;
-const $item = d.querySelector("#todo-item");
-const $list = d.querySelector("#todo-list");
+//Estado
+let state = {
+    todoList: [],
+};
+//Template
+const template = () => {
+    if (state.todoList < 1) return `<p>No hay tareas</p>`;
+    let todos = state.todoList.map((item) => `<li>${item}</li>`).join("");
+    return todos;
+};
+//Render
+const render = () => {
+    const $list = d.querySelector("#todo-list");
+    if (!$list) return;
+    $list.innerHTML = template();
+};
 
 function addToDo(e) {
     e.preventDefault();
-    if(!e.target.matches("#todo-form")) return false;
+    if (!e.target.matches("#todo-form")) return false;
 
-    const $li = d.createElement("li");
-    $li.textContent = $item.value;
-    $list.appendChild($li)
+    const $item = d.querySelector("#todo-item");
+    state.todoList.push($item.value)
+    render();
 
-    $item.value = '';
-}   
+    $item.value = "";
+}
+
+d.addEventListener("DOMContentLoaded", render)
 
 d.addEventListener("submit", addToDo);

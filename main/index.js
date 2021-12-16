@@ -15,6 +15,7 @@ const render = () => {
     const $list = d.querySelector("#todo-list");
     if (!$list) return;
     $list.innerHTML = template();
+    console.log("estado", state)
 };
 
 //SetState
@@ -26,19 +27,17 @@ const setState = (obj) => {
     }
     render();
 }
-
-setState({
-    todoList: ["item1","item2","item3"],
-    nombre: "odon"
-})
+//GetState
+const getState = () => JSON.parse(JSON.stringify(state))
 
 function addToDo(e) {
     e.preventDefault();
     if (!e.target.matches("#todo-form")) return false;
 
     const $item = d.querySelector("#todo-item");
-    state.todoList.push($item.value)
-    render();
+    const lastState = getState();
+    lastState.todoList.push($item.value)
+    setState({todoList: lastState.todoList});
 
     $item.value = "";
 }
